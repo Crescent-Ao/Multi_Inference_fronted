@@ -315,6 +315,13 @@ const handleKnowledgeSelect = () => {
 const handleLocalUpload = ({ file }: any) => {
   const reader = new FileReader()
   reader.onload = (e) => {
+    // 添加日志
+    console.log('本地上传图片数据格式:', {
+      resultType: typeof e.target?.result,
+      dataPrefix: e.target?.result?.toString().substring(0, 50),
+      length: e.target?.result?.toString().length
+    })
+    
     selectedImage.value = {
       url: e.target?.result,
       name: file.name,
@@ -340,13 +347,35 @@ const handleDatasetSelect = async (dataset: any) => {
 }
 
 // 处理图片选择
-const handleImageSelect = (image: any) => {
-  selectedImage.value = {
-    url: image.url,
-    name: image.name,
-    source: `知识库 - ${image.dataset}`
+const handleImageSelect = async (image: any) => {
+  try {
+    // 获取图片数据并转换为 base64
+    const response = await fetch(image.url)
+    const blob = await response.blob()
+    
+    // 使用 FileReader 转换为 base64
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      // 添加日志
+      console.log('预存图片转换后的数据格式:', {
+        resultType: typeof e.target?.result,
+        dataPrefix: e.target?.result?.toString().substring(0, 50),
+        length: e.target?.result?.toString().length
+      })
+      
+      selectedImage.value = {
+        url: e.target?.result,
+        name: image.name,
+        source: `知识库 - ${image.dataset}`
+      }
+      emit('update:image', selectedImage.value)
+    }
+    reader.readAsDataURL(blob)
+    
+  } catch (error) {
+    console.error('预存图片转换错误:', error)
   }
-  emit('update:image', selectedImage.value)
+  
   showKnowledgeSelect.value = false
 }
 

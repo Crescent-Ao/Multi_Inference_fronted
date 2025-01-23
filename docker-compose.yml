@@ -4,18 +4,18 @@ services:
   frontend:
     build: .
     ports:
-      - "80:80"
+      - "3201:80"
     depends_on:
       - backend
     networks:
       - app-network
 
   backend:
-    build: ./backend
+    image: multi-inference-backend:v1
     ports:
       - "8000:8000"
     volumes:
-      - ./backend/deploy_model:/app/deploy_model
+      - /Users/crescent/Multi_Inference_Backend:/app/
     environment:
       - PYTHONUNBUFFERED=1
     networks:

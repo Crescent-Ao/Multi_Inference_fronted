@@ -9,7 +9,7 @@
           <n-button
             v-for="category in categories"
             :key="category.key"
-            :class="['category-button', { active: selectedCategory === category.key }]"
+            :class="['category-button', { active: activeCategory === category.key }]"
             text
             @click="handleCategoryClick(category.key)"
           >
@@ -24,10 +24,10 @@
         <div class="right">
           <n-input 
             v-model:value="searchQuery" 
-            placeholder="搜索" 
+            placeholder="搜索标题、描述、标签或作者" 
             round
+            clearable
             @input="handleSearch"
-            @keydown.enter="handleSearch"
           >
             <template #prefix>
               <n-icon><Search /></n-icon>
@@ -42,9 +42,9 @@
       <div class="content-wrapper">
         <div class="card-grid">
           <knowledge-card
-            v-for="card in filteredCards"
-            :key="card.id"
-            :tool="card"
+            v-for="item in filteredData"
+            :key="item.id"
+            :tool="item"
           />
         </div>
       </div>
@@ -69,16 +69,11 @@ const categories = [
 ]
 
 // 分类状态
-const selectedCategory = ref('all')
+const activeCategory = ref('all')
 const searchQuery = ref('')
 
 const handleCategoryClick = (key: string) => {
-  selectedCategory.value = key
-}
-
-const handleSearch = () => {
-  // 实现搜索逻辑
-  console.log('Searching for:', searchQuery.value)
+  activeCategory.value = key
 }
 
 // 文档数据集合
@@ -237,18 +232,47 @@ def positional_encoding(length, depth):
   }
 ]
 
-// 根据分类筛选卡片
-const filteredCards = computed(() => {
-  if (selectedCategory.value === 'all') {
-    return knowledgeData
+// 修改筛选逻辑，加入搜索功能
+const filteredData = computed(() => {
+  let data = knowledgeData
+
+  // 如果有搜索关键词，先进行搜索过滤
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase()
+    data = data.filter(item => {
+      // 搜索条件：标签匹配
+      const tagMatch = item.tags.some(tag => 
+        tag.toLowerCase().includes(query)
+      )
+
+      // 搜索名称、描述和作者
+      const nameMatch = item.name.toLowerCase().includes(query)
+      const descMatch = item.description.toLowerCase().includes(query)
+      const authorMatch = item.author.toLowerCase().includes(query)
+
+      // 任一条件匹配即可
+      return tagMatch || nameMatch || descMatch || authorMatch
+    })
   }
-  return knowledgeData.filter(card => {
-    if (selectedCategory.value === 'examples') {
-      return card.type === 'dataset-examples'
+
+  // 根据分类进行过滤
+  if (activeCategory.value !== 'all') {
+    if (activeCategory.value === 'examples') {
+      // 数据示例类型
+      data = data.filter(item => item.type === 'dataset-examples')
+    } else if (activeCategory.value === 'documents') {
+      // 文档类型
+      data = data.filter(item => item.type === 'documents')
     }
-    return card.type === 'documents'
-  })
+  }
+
+  return data
 })
+
+// 处理搜索输入
+const handleSearch = (value: string) => {
+  searchQuery.value = value
+}
 </script>
 
 <style scoped>

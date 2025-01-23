@@ -315,7 +315,15 @@ const handleInference = async () => {
 
   try {
     isInferencing.value = true
-    outputImage.value = ''  // 清空之前的输出图像
+    outputImage.value = ''
+    
+    // 添加日志
+    console.log('发送给后端的图片数据:', {
+      imageType: typeof inputImage.value,
+      dataPrefix: inputImage.value.substring(0, 50),
+      length: inputImage.value.length,
+      isBase64: inputImage.value.startsWith('data:image')
+    })
     
     // 构建推理参数
     const inferenceParams = {

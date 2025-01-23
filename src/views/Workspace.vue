@@ -138,7 +138,7 @@ const registeredTools = [
     component: Object_Detection,
     category: 'detection',
     tags: ['目标检测', '无人机'],
-    apiUrl: 'http://localhost:8001',
+    apiUrl: 'http://localhost:8000',
     author: 'Crescent',
     icon: new URL('@/assets/DroneVehicle.png', import.meta.url).href
   },
@@ -155,19 +155,22 @@ const registeredTools = [
     id: 4,
     component: Object_Detection,
     category: 'segmentation',
-    tags: ['语义分割', '无人机']
+    tags: ['语义分割', '无人机'],
+    apiUrl: 'http://localhost:8000',
   },
   {
     id: 5,
     component: Object_Detection,
     category: 'tracking',
-    tags: ['视频跟踪', '红外图像']
+    tags: ['视频跟踪', '红外图像'],
+    apiUrl: 'http://localhost:8000',
   },
   {
     id: 6,
     component: Object_Detection,
     category: 'tracking',
-    tags: ['视频跟踪', '无人机']
+    tags: ['视频跟踪', '无人机'],
+    apiUrl: 'http://localhost:8000',
   },
   {
     id: 7,
@@ -179,13 +182,15 @@ const registeredTools = [
     id: 8,
     component: Object_Detection,
     category: 'segmentation',
-    tags: ['语义分割', '低光照']
+    tags: ['语义分割', '低光照'],
+    apiUrl: 'http://localhost:8000',
   },
   {
     id: 9,
     component: Object_Detection,
     category: 'segmentation',
-    tags: ['语义分割', '低光照']
+    tags: ['语义分割', '低光照'],
+    apiUrl: 'http://localhost:8000',
   }
 ]
 
