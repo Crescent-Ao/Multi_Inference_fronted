@@ -190,6 +190,7 @@ interface ToolProps {
       }
     }
     apiUrl: string
+    category: string
   }
 }
 
@@ -266,7 +267,8 @@ const handleModelInit = async () => {
     
     // 构建初始化参数
     const initParams = {
-      modelName: props.tool.name,
+      modelName: props.tool.name,  // 添加卡片名称
+      category: props.tool.category,  // 添加卡片类别
       framework: inferenceFramework.value,
       precision: inferencePrecision.value,
       taskType: taskType,
@@ -283,6 +285,8 @@ const handleModelInit = async () => {
     console.group('模型初始化请求信息')
     console.log('请求类型:', actionType)
     console.log('完整参数:', initParams)
+    console.log('模型名称:', initParams.modelName)
+    console.log('模型类别:', initParams.category)  // 添加类别日志
     console.log('推理框架:', initParams.framework)
     console.log('推理精度:', initParams.precision)
     console.log('任务类型:', initParams.taskType)
@@ -290,16 +294,17 @@ const handleModelInit = async () => {
     console.log('请求时间:', initParams.timestamp)
     console.groupEnd()
 
-    // 调用后端 API
+    // 调用后端 API，添加 modelName 和 category 参数
     const response = await axios.post(`${props.tool.apiUrl}/initialize_model/`, {
       platform: inferenceFramework.value,
-      precision: inferencePrecision.value
+      precision: inferencePrecision.value,
+      modelName: props.tool.name,  // 添加模型名称参数
+      category: props.tool.category  // 添加类别参数
     })
 
     console.log('API响应:', response.data)
 
     if (response.data.message === '模型初始化成功') {
-      // 初始化成功
       isModelInitialized.value = true
       console.log('模型初始化状态已更新:', isModelInitialized.value)
       console.log('成功初始化的任务类型:', taskType)
@@ -309,7 +314,6 @@ const handleModelInit = async () => {
     }
     
   } catch (error) {
-    // 初始化失败
     isModelInitialized.value = false
     console.error('模型初始化错误:', error)
     message.error(error instanceof Error ? error.message : `模型${actionType}失败`)

@@ -44,10 +44,16 @@
           <div v-for="tool in filteredTools" :key="tool.id" class="tool-item">
             <component 
               :is="tool.component" 
+              :name="tool.name"
               :tags="tool.tags"
               :apiUrl="tool.apiUrl"
               :author="tool.author"
               :icon="tool.icon"
+              :description="tool.description"
+              :category="tool.category"
+              :version="tool.version"
+              :createTime="tool.createTime"
+              :updateTime="tool.updateTime"
             />
           </div>
         </div>
@@ -128,19 +134,21 @@ const registeredTools = [
   {
     id: 1,
     component: Object_Detection,
+    name : 'dsadsadas',
     tags: ['目标检测', '红外图像',"DAIK"],
     apiUrl: 'http://localhost:8000',
-    author: 'Crescent',
-    icon: new URL('@/assets/DroneVehicle.png', import.meta.url).href
+    author: 'CrescentAoAO',
+    icon: '/src/assets/DroneVehicle.png'
   },
   {
     id: 2,
     component: Object_Detection,
     category: 'detection',
+    name: 'Pond_Semantic',
     tags: ['目标检测', '无人机'],
     apiUrl: 'http://localhost:8000',
     author: 'Crescent',
-    icon: new URL('@/assets/DroneVehicle.png', import.meta.url).href
+    icon: '/src/assets/Pond_Semantic.png'
   },
   {
     id: 3,
@@ -149,7 +157,17 @@ const registeredTools = [
     tags: ['语义分割', '无人机'],
     apiUrl: 'http://localhost:8000',
     author: 'DAIK',
-    icon: new URL('@/assets/segmentation.png', import.meta.url).href
+    icon: '/src/data/DIOR-R/00232.jpg'
+  },
+  {
+    id: 12,
+    component: SemanticSegmentation,
+    category: 'segmentation',
+    name: 'HZCWH',
+    tags: ['语义分割', '无人机'],
+    apiUrl: 'http://localhost:8000',
+    author: 'DAIK',
+    icon: '/src/data/DIOR-R/00234.jpg'
   },
   {
     id: 4,

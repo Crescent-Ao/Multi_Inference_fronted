@@ -1,7 +1,13 @@
 <template>
   <div class="tool-card" @click="$emit('click')">
     <div class="tool-header">
-      <n-avatar :src="tool.icon" :round="false" class="tool-icon" />
+      <n-avatar 
+        :round="false" 
+        class="tool-icon"
+        :src="getIconSource"
+        :color="transparent"
+        @error="handleIconError"
+      />
       <div class="tool-info">
         <div class="tool-title">{{ tool.name }}</div>
         <div class="tool-author">{{ tool.author }}</div>
@@ -23,17 +29,33 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { NAvatar, NTag } from 'naive-ui'
+import type { Component } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   tool: {
-    icon: string
+    icon: string | Component
     name: string
     author: string
     description: string
     tags: string[]
   }
 }>()
+
+const getIconSource = computed(() => {
+  const { icon } = props.tool
+  
+  if (typeof icon === 'string') {
+    return icon
+  }
+  
+  return ''
+})
+
+const handleIconError = () => {
+  console.warn(`图标加载失败: ${props.tool.icon}`)
+}
 </script>
 
 <style scoped>
@@ -68,6 +90,8 @@ defineProps<{
   width: 48px;
   height: 48px;
   flex-shrink: 0;
+  background: transparent !important;
+  object-fit: cover;
 }
 
 .tool-info {

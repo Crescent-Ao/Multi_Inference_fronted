@@ -4,8 +4,8 @@
       <n-avatar 
         :round="false" 
         class="tool-icon"
+        :src="getIconSource"
         :color="transparent"
-        :src="tool.icon"
       />
       <div class="tool-info">
         <div class="tool-title">{{ tool.name }}</div>
@@ -55,14 +55,22 @@ const props = defineProps<{
     author: string
     tags: string[]
     type: string
-    icon?: string
+    icon: string | Component
     content: string
     toc: any[]
   }
 }>()
 
-// 根据类型选择图标
-const cardIcon = computed(() => {
+// 计算图标源
+const getIconSource = computed(() => {
+  const { icon } = props.tool
+  
+  // 如果是字符串（URL），直接返回
+  if (typeof icon === 'string') {
+    return icon
+  }
+  
+  // 如果没有提供图标，根据类型返回默认图标
   switch (props.tool.type) {
     case 'documents':
       return DocumentTextOutline
@@ -128,14 +136,8 @@ const handleClick = () => {
   height: 48px;
   flex-shrink: 0;
   background: transparent !important;
+  object-fit: cover;
 }
-
-.tool-icon {
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-}
-
 
 .tool-info {
   flex: 1;
