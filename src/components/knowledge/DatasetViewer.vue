@@ -59,9 +59,8 @@
           >
             <n-image
               :src="image"
-              object-fit="cover"
-              class="image-preview"
               :preview-src="image"
+              object-fit="cover"
             />
           </div>
         </div>
@@ -74,6 +73,7 @@
 import { onMounted, ref, computed } from 'vue'
 import { NModal, NTag, NImage } from 'naive-ui'
 import type { DatasetExample } from '@/data/datasetExamples'
+import { useMessage } from 'naive-ui'
 
 const props = defineProps<{
   visible: boolean
@@ -109,13 +109,56 @@ const handleVisibleChange = (value: boolean) => {
 // 加载图片
 onMounted(async () => {
   try {
-    // 这里需要根据你的实际情况修改图片加载逻辑
-    const imageContext = import.meta.glob('/src/data/DIOR-R/**/*.{jpg,jpeg,png}', { eager: true })
-    images.value = Object.values(imageContext).map((module: any) => module.default)
+    // 添加.tif到支持的文件类型中
+    const imagePattern = `${props.dataset.imagePath}**/*.{jpg,jpeg,png,tif}`
+    const imageContext = import.meta.glob('/src/data/**/*.{jpg,jpeg,png,tif}', { eager: true })
+    
+    // 过滤出匹配指定路径的图片
+    images.value = Object.entries(imageContext)
+      .filter(([path]) => path.startsWith(props.dataset.imagePath))
+      .map(([, module]: [string, any]) => module.default)
+      
   } catch (error) {
     console.error('Failed to load images:', error)
   }
 })
+
+// 自定义全屏预览
+const showFullScreenImage = (imageSrc: string) => {
+  const img = new Image()
+  img.src = imageSrc
+  img.onload = () => {
+    const previewDiv = document.createElement('div')
+    previewDiv.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    `
+    
+    const previewImg = document.createElement('img')
+    previewImg.src = imageSrc
+    previewImg.style.cssText = `
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    `
+    
+    previewDiv.appendChild(previewImg)
+    document.body.appendChild(previewDiv)
+    
+    // 点击关闭预览
+    previewDiv.onclick = () => {
+      document.body.removeChild(previewDiv)
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -131,12 +174,13 @@ onMounted(async () => {
   height: 100%;
   margin: -20px;
   background: #fff;
+  max-height: 95vh;  /* 限制最大高度 */
 }
 
 .dataset-header {
   padding: 24px;
   border-bottom: 1px solid #eee;
-  flex-shrink: 0;
+  flex-shrink: 0;  /* 防止头部被压缩 */
   background: #fff;
 }
 
@@ -182,35 +226,36 @@ onMounted(async () => {
 
 .images-container {
   flex: 1;
-  overflow: hidden;
+  overflow: hidden;  /* 隐藏容器自身的滚动条 */
   padding: 24px;
   background: #fff;
+  min-height: 0;  /* 重要：允许内容区域收缩 */
 }
 
 .images-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 24px;
-  overflow-y: auto;
-  background: #fff;
-  min-height: 100%;
+  overflow-y: auto;  /* 只在网格内滚动 */
+  height: 100%;  /* 填充容器高度 */
   padding-right: 8px;  /* 为滚动条预留空间 */
+  padding-bottom: 24px;  /* 为最后一行添加底部间距 */
 }
 
 .image-card {
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
-  transition: all 0.3s;
   height: 160px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  cursor: pointer;
 }
 
-.image-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.image-preview {
+.image-card :deep(img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -235,10 +280,13 @@ onMounted(async () => {
   background: #999;
 }
 
-/* 确保图片预览在视口范围内 */
-:deep(.n-image-preview-container) {
-  max-height: 100vh !important;
-  max-width: 100vw !important;
+/* 移除任何可能的外层容器padding */
+:deep(.n-modal-body-wrapper),
+:deep(.n-modal-body) {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* 确保滚动条区域也有背景色 */
@@ -248,5 +296,39 @@ onMounted(async () => {
 
 :deep(.n-modal) {
   background: #fff;
+}
+
+/* 修改预览样式以移除留白 */
+:deep(.n-image-preview-container) {
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+:deep(.n-image-preview-img-container) {
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+:deep(.n-image-preview-img) {
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 移除预览工具栏的边距 */
+:deep(.n-image-preview-toolbar) {
+  margin: 0 !important;
+  padding: 8px !important;
 }
 </style> 

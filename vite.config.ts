@@ -22,5 +22,30 @@ export default defineConfig({
       '~': resolve(__dirname, 'src/assets'), // 可选：设置 ~ 指向 assets 目录
     }
   },
-  assetsInclude: ['**/*.md'],  // 添加对 Markdown 文件的支持
+  assetsInclude: ['**/*.md', '**/*.jpg', '**/*.jpeg', '**/*.png', '**/*.gif', '**/*.tif', '**/*.tiff'],  // 添加对 Markdown 文件的支持
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+      },
+      output: {
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.')
+          let extType = info[info.length - 1]
+          if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/i.test(assetInfo.name)) {
+            extType = 'media'
+          } else if (/\.(png|jpe?g|gif|svg|tif|tiff)(\?.*)?$/i.test(assetInfo.name)) {
+            extType = 'imgs'
+          }
+          return `static/${extType}/[name]-[hash][extname]`
+        },
+      },
+    },
+  },
+  server: {
+    fs: {
+      strict: false,
+      allow: ['..']
+    }
+  }
 })

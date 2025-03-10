@@ -134,82 +134,64 @@ const registeredTools = [
   {
     id: 1,
     component: Object_Detection,
-    name : 'dsadsadas',
-    tags: ['目标检测', '红外图像',"DAIK"],
-    apiUrl: 'http://localhost:8000',
-    author: 'CrescentAoAO',
-    icon: '/src/assets/DroneVehicle.png'
-  },
-  {
-    id: 2,
-    component: Object_Detection,
     category: 'detection',
-    name: 'Pond_Semantic',
-    tags: ['目标检测', '无人机'],
-    apiUrl: 'http://localhost:8000',
-    author: 'Crescent',
-    icon: '/src/assets/Pond_Semantic.png'
+    name : 'DAIK-DroneVehicle',
+    tags: ['目标检测', '红外图像',"DAIK"],
+    apiUrl: '/api', // 修改为相对路径
+    author: 'AoAo',
+    icon: '/src/data/DroneVehicle/00014.jpg'
   },
   {
     id: 3,
     component: SemanticSegmentation,
     category: 'segmentation',
+    name: "UNetformer-Potsdam",
     tags: ['语义分割', '无人机'],
-    apiUrl: 'http://localhost:8000',
-    author: 'DAIK',
+    apiUrl: '/api', // 修改为相对路径
+    author: 'AoAo',
+    icon: '/src/data/Potsdam/2_13__100__0___0.jpg'
+  },
+  {
+    id: 3,
+    component: SemanticSegmentation,
+    category: 'segmentation',
+    name: "UNetformer-Pond",
+    tags: ['语义分割', '无人机'],
+    apiUrl: '/api', // 修改为相对路径
+    author: 'AoAo',
+    icon: '/src/data/Pond/1.1__100__0___512.jpg'
+  },
+  {
+    id: 3,
+    component: SemanticSegmentation,
+    name: "UNetformer-seaice",
+    category: 'segmentation',
+    tags: ['语义分割', '无人机'],
+    apiUrl: '/api', // 修改为相对路径
+    author: 'AoAo',
     icon: '/src/data/DIOR-R/00232.jpg'
   },
   {
-    id: 12,
+    id: 5,
     component: SemanticSegmentation,
     category: 'segmentation',
-    name: 'HZCWH',
+    name: "UNetformer-Potsdam",
     tags: ['语义分割', '无人机'],
-    apiUrl: 'http://localhost:8000',
-    author: 'DAIK',
-    icon: '/src/data/DIOR-R/00234.jpg'
+    apiUrl: '/api', // 修改为相对路径
+    author: 'AoAo',
+    icon: '/src/data/seaice/08__100__0___25200.jpg'
   },
   {
     id: 4,
-    component: Object_Detection,
+    component: SemanticSegmentation,
     category: 'segmentation',
+    name: "UNetformer-Vahingen",
     tags: ['语义分割', '无人机'],
-    apiUrl: 'http://localhost:8000',
+    apiUrl: '/api', // 修改为相对路径
+    author: 'AoAo',
+    icon: '/src/data/Vahingen/10__100__0___0.jpg'
   },
-  {
-    id: 5,
-    component: Object_Detection,
-    category: 'tracking',
-    tags: ['视频跟踪', '红外图像'],
-    apiUrl: 'http://localhost:8000',
-  },
-  {
-    id: 6,
-    component: Object_Detection,
-    category: 'tracking',
-    tags: ['视频跟踪', '无人机'],
-    apiUrl: 'http://localhost:8000',
-  },
-  {
-    id: 7,
-    component: Object_Detection,
-    category: 'detection',
-    tags: ['目标检测', '低光照']
-  },
-  {
-    id: 8,
-    component: Object_Detection,
-    category: 'segmentation',
-    tags: ['语义分割', '低光照'],
-    apiUrl: 'http://localhost:8000',
-  },
-  {
-    id: 9,
-    component: Object_Detection,
-    category: 'segmentation',
-    tags: ['语义分割', '低光照'],
-    apiUrl: 'http://localhost:8000',
-  }
+  
 ]
 
 // 添加搜索状态
@@ -906,4 +888,4 @@ const clearSearch = () => {
 .nav-header .right {
   gap: 16px;
 }
-</style> 
+</style>

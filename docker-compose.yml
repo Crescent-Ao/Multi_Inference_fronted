@@ -2,25 +2,49 @@ version: '3'
 
 services:
   frontend:
-    build: .
+    image: fronted:v7
     ports:
-      - "3201:80"
+      - "2710:80"
     depends_on:
       - backend
+    volumes:
+      - ./src:/usr/share/nginx/html/src
     networks:
       - app-network
 
   backend:
-    image: multi-inference-backend:v1
+    image: backend:v6
     ports:
       - "8000:8000"
-    volumes:
-      - /Users/crescent/Multi_Inference_Backend:/app/
     environment:
       - PYTHONUNBUFFERED=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DISABLE_REQUIRE=1
+      - NVIDIA_DRIVER_CAPABILITIES=all  # 修改为 all
+    deploy:  # 添加 deploy 配置
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     networks:
       - app-network
+    # 核心配置
+    runtime: nvidia  # 必须已安装 NVIDIA Container Toolkit
+    ipc: host        # 保持与之前一致的 IPC 配置
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      stack:
+        soft: 67108864
+        hard: 67108864
+    # 添加以下配置帮助调试
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
 
 networks:
   app-network:
-    driver: bridge 
+    driver: bridge

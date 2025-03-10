@@ -133,156 +133,81 @@ import {
 
 // 从 Knowledge.vue 中获取数据
 const datasetExamples = ref([
-  {
-    id: 'dior-r',
-    name: 'DIOR-R 数据集',
-    author: '王五',
-    description: 'DIOR-R是一个用于遥感目标检测的大规模数据集，包含航空图像和卫星图像。',
-    tags: ['遥感', '目标检测', '航空图像'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 1000,
-      categories: ['飞机', '船舶', '建筑', '机场', '港口'],
-      resolution: '800x800',
-      dateCreated: '2023-06-15'
+   {
+      id: 'DroneVehicle',
+      name: 'DroneVehicle数据集',
+      author: 'Crescent',
+      description: 'DroneVehicle是一个专门用于无人机视角下的车辆检测数据集。',
+      tags: ['无人机', '目标检测', '车辆检测'],
+      type: 'dataset-examples',
+      imagePath: '/src/data/DroneVehicle/',
+      stats: {
+        totalImages: 21,
+        categories: ["汽车", "运输车", "卡车", "公交车", "面包车"],
+        resolution: '800x800',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Pond_Semantic',
+      name: 'Pond 数据集',
+      author: 'Crescent',
+      description: '池塘语义分割数据集，包含四个类别',
+      tags: ['无人机', '遥感检测', '池塘检测'],
+      type: 'dataset-examples',
+      imagePath: '/src/data/Pond/',
+      stats: {
+        totalImages: 20,
+        categories: ['OxyPond', 'Pond', 'DryPond', 'CagePond'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Potsdam',
+      name: 'Potsdam 数据集',
+      author: 'Crescent',
+      description: 'Potsdam数据集由德国波茨坦市的航空影像组成，由德国摄影测量与遥感协会（ISPRS）提供。影像通过机载传感器采集，具有高空间分辨率。',
+      tags: ['无人机', '遥感检测', '地物检测'],
+      type: 'dataset-examples',
+      imagePath: '/src/data/Potsdam/',
+      stats: {
+        totalImages: 20,
+        categories: ['ImSurf', 'Building', 'LowVeg', 'Tree', 'Car'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Seaice',
+      name: 'Seaice数据集',
+      author: 'Crescent',
+      description: 'Seaice数据由福州大学数字中国研究院提供，包含四个类别',
+      tags: ['无人机', '遥感检测', '海冰检测'],
+      type: 'dataset-examples',
+      imagePath: '/src/data/seaice/',
+      stats: {
+        totalImages: 21,
+        categories: ['OpenWater', 'Land', 'Ice', 'Snow', 'Cloud', 'Shadow'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Vahingen',
+      name: 'Vaihingen数据集',
+      author: 'Crescent',
+      description: 'Vaihingen数据集由德国联邦环境、自然保护和核安全部提供，包含四个类别',
+      tags: ['无人机', '遥感检测', '地物检测'],
+      type: 'dataset-examples',
+      imagePath: '/src/data/Vahingen',
+      stats: {
+        totalImages: 21,
+        categories: ['OpenWater', 'Land', 'Ice', 'Snow', 'Cloud', 'Shadow'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
+      }
     }
-  },
-  {
-    id: 'visdrone',
-    name: 'VisDrone 数据集',
-    author: '赵六',
-    description: 'VisDrone是一个无人机视角的目标检测数据集，包含多种场景下的航拍图像。',
-    tags: ['无人机', '目标检测', '航拍'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 800,
-      categories: ['人', '车辆', '自行车', '建筑物'],
-      resolution: '1920x1080',
-      dateCreated: '2023-08-20'
-    }
-  },
-  {
-    id: 'levir-cd',
-    name: 'LEVIR-CD 数据集',
-    author: '张三',
-    description: 'LEVIR-CD是一个用于遥感变化检测的数据集，包含不同时相的卫星图像对。',
-    tags: ['遥感', '变化检测', '卫星图像'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 1200,
-      categories: ['建筑变化', '植被变化', '水体变化'],
-      resolution: '1024x1024',
-      dateCreated: '2023-07-10'
-    }
-  },
-  {
-    id: 'rsipac',
-    name: 'RSIPAC 数据集',
-    author: '李四',
-    description: 'RSIPAC是一个遥感图像场景分类数据集，包含多种地物类型的卫星图像。',
-    tags: ['遥感', '场景分类', '卫星图像'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 1500,
-      categories: ['农田', '城市', '森林', '水域', '草地'],
-      resolution: '256x256',
-      dateCreated: '2023-09-01'
-    }
-  },
-  {
-    id: 'fair1m',
-    name: 'FAIR1M 数据集',
-    author: '陈七',
-    description: 'FAIR1M是一个大规模的遥感目标检测数据集，专注于细粒度目标识别。',
-    tags: ['遥感', '目标检测', '细粒度识别'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 2000,
-      categories: ['飞机型号', '船舶类型', '车辆品牌'],
-      resolution: '1024x1024',
-      dateCreated: '2023-10-15'
-    }
-  },
-  {
-    id: 'gaofen-image',
-    name: '高分影像数据集',
-    author: '吴八',
-    description: '高分影像数据集包含了来自高分卫星的高分辨率光学遥感图像。',
-    tags: ['遥感', '高分辨率', '光学影像'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 1800,
-      categories: ['城市', '农业', '交通', '工业'],
-      resolution: '2048x2048',
-      dateCreated: '2023-11-20'
-    }
-  },
-  {
-    id: 'sar-detect',
-    name: 'SAR目标检测数据集',
-    author: '孙九',
-    description: 'SAR目标检测数据集专注于雷达图像中的目标识别与检测。',
-    tags: ['遥感', 'SAR', '目标检测'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 900,
-      categories: ['舰船', '机场', '桥梁', '港口'],
-      resolution: '512x512',
-      dateCreated: '2023-12-05'
-    }
-  },
-  {
-    id: 'multispectral',
-    name: '多光谱影像数据集',
-    author: '郑十',
-    description: '多光谱遥感影像数据集，包含可见光、近红外等多个波段。',
-    tags: ['遥感', '多光谱', '地物分类'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 1600,
-      categories: ['植被', '水体', '建筑', '裸地'],
-      resolution: '896x896',
-      dateCreated: '2024-01-10'
-    }
-  },
-  {
-    id: 'uav-mapping',
-    name: 'UAV测绘数据集',
-    author: '黄十一',
-    description: 'UAV低空测绘数据集，包含各类地形地貌的无人机航拍图像。',
-    tags: ['无人机', '测绘', '三维重建'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 1300,
-      categories: ['建筑群', '道路网', '地形图'],
-      resolution: '4096x3072',
-      dateCreated: '2024-02-15'
-    }
-  },
-  {
-    id: 'night-vision',
-    name: '夜视影像数据集',
-    author: '林十二',
-    description: '夜间遥感影像数据集，包含夜光、热红外等夜间观测数据。',
-    tags: ['遥感', '夜视', '热红外'],
-    type: 'dataset-examples',
-    imagePath: '/src/data/DIOR-R',
-    stats: {
-      totalImages: 700,
-      categories: ['城市夜光', '热源识别', '夜间活动'],
-      resolution: '1024x768',
-      dateCreated: '2024-03-01'
-    }
-  }
 ])
 
 const emit = defineEmits(['update:image'])
@@ -336,14 +261,16 @@ const handleLocalUpload = ({ file }: any) => {
 // 处理数据集选择
 const handleDatasetSelect = async (dataset: any) => {
   selectedDataset.value = dataset
-  // 统一使用 DIOR-R 的图片路径
-  const imageContext = import.meta.glob('/src/data/DIOR-R/**/*.{jpg,jpeg,png}', { eager: true })
-  datasetImages.value = Object.entries(imageContext).map(([path, module]: any) => ({
-    id: path,
-    url: module.default,
-    name: path.split('/').pop(),
-    dataset: dataset.name
-  }))
+  // 使用传入的 dataset.imagePath 而不是硬编码路径
+  const imageContext = import.meta.glob('/src/data/**/*.{jpg,jpeg,png}', { eager: true })
+  datasetImages.value = Object.entries(imageContext)
+    .filter(([path]) => path.startsWith(dataset.imagePath))
+    .map(([path, module]: any) => ({
+      id: path,
+      url: module.default,
+      name: path.split('/').pop(),
+      dataset: dataset.name
+    }))
 }
 
 // 处理图片选择

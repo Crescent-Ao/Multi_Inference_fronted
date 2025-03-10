@@ -106,35 +106,83 @@ const loadMarkdownContent = async () => {
       contentPath: '/src/data/knowledge/transformer.md'
     },
     {
-      id: 'dior-r',
-      name: 'DIOR-R 数据集',
-      author: '王五',
-      description: 'DIOR-R是一个用于遥感目标检测的大规模数据集，包含航空图像和卫星图像。',
-      tags: ['遥感', '目标检测', '航空图像'],
-      type: 'dataset-examples',
-      icon: '/src/assets/Pond_Semantic.png',
-      imagePath: '/src/data/DIOR-R/',
-      stats: {
-        totalImages: 1000,
-        categories: ['飞机', '船舶', '建筑', '机场', '港口'],
-        resolution: '800x800',
-        dateCreated: '2023-06-15'
-      }
-    },
-    {
-      id: 'drone-vehicle',
-      name: 'DroneVehicle 数据集',
-      author: 'DAIK',
+      id: 'DroneVehicle',
+      name: 'DroneVehicle数据集',
+      author: 'Crescent',
       description: 'DroneVehicle是一个专门用于无人机视角下的车辆检测数据集。',
       tags: ['无人机', '目标检测', '车辆检测'],
       type: 'dataset-examples',
-       icon: '/src/assets/Pond_Semantic.png',
+      icon: '/src/data/DroneVehicle/00014.jpg',
       imagePath: '/src/data/DroneVehicle/',
       stats: {
-        totalImages: 1500,
-        categories: ['小汽车', '卡车', '公交车'],
-        resolution: '1920x1080',
-        dateCreated: '2024-01-01'
+        totalImages: 21,
+        categories: ["汽车", "运输车", "卡车", "公交车", "面包车"],
+        resolution: '800x800',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Pond_Semantic',
+      name: 'Pond 数据集',
+      author: 'Crescent',
+      description: '池塘语义分割数据集，包含四个类别',
+      tags: ['无人机', '遥感检测', '池塘检测'],
+      type: 'dataset-examples',
+      icon: '/src/data/Pond/1.1__100__0___512.jpg',
+      imagePath: '/src/data/Pond/',
+      stats: {
+        totalImages: 20,
+        categories: ['OxyPond', 'Pond', 'DryPond', 'CagePond'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Potsdam',
+      name: 'Potsdam 数据集',
+      author: 'Crescent',
+      description: 'Potsdam数据集由德国波茨坦市的航空影像组成，由德国摄影测量与遥感协会（ISPRS）提供。影像通过机载传感器采集，具有高空间分辨率。',
+      tags: ['无人机', '遥感检测', '地物检测'],
+      type: 'dataset-examples',
+      icon: '/src/data/Potsdam/2_13__100__0___0.jpg',
+      imagePath: '/src/data/Potsdam/',
+      stats: {
+        totalImages: 20,
+        categories: ['ImSurf', 'Building', 'LowVeg', 'Tree', 'Car'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Seaice',
+      name: 'Seaice数据集',
+      author: 'Crescent',
+      description: 'Seaice数据由福州大学数字中国研究院提供，包含四个类别',
+      tags: ['无人机', '遥感检测', '海冰检测'],
+      type: 'dataset-examples',
+      icon: '/src/data/seaice/08__100__0___25200.jpg',
+      imagePath: '/src/data/seaice/',
+      stats: {
+        totalImages: 21,
+        categories: ['OpenWater', 'Land', 'Ice', 'Snow', 'Cloud', 'Shadow'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
+      }
+    },
+    {
+      id: 'Vahingen',
+      name: 'Vaihingen数据集',
+      author: 'Crescent',
+      description: 'Vaihingen数据集由德国联邦环境、自然保护和核安全部提供，包含四个类别',
+      tags: ['无人机', '遥感检测', '地物检测'],
+      type: 'dataset-examples',
+      icon: '/src/data/Vahingen/10__100__0___0.jpg',
+      imagePath: '/src/data/Vahingen',
+      stats: {
+        totalImages: 21,
+        categories: ['OpenWater', 'Land', 'Ice', 'Snow', 'Cloud', 'Shadow'],
+        resolution: '1024x1024',
+        dateCreated: '2025-01-26'
       }
     }
   ]
